@@ -1,3 +1,4 @@
+import Button from "../common/button"
 export default function Navigation(){
-    return <nav className="w-[260px] bg-gray-900 text-gray-300">导航</nav>
+    return <nav className=" h-full w-[260px] bg-gray-900 text-gray-300"><Button>新建对话</Button></nav>
 }
