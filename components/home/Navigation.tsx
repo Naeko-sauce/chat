@@ -1,4 +1,5 @@
 import Button from "../common/button"
+import { HiPlus } from "react-icons/hi"
 export default function Navigation(){
-    return <nav className="p-2 h-full w-[260px] bg-gray-900 text-gray-300"><Button>新建对话</Button></nav>
+    return <div className="flex space-x-3"><Button icon={HiPlus} variant="outline" className="flex-1">新建对话</Button></div>
 }
