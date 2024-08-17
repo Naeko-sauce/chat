@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
   return (
 
-      <div className="p-10 bg-green-700">{children}</div>
+      <div className="">{children}</div>
   
   );
 }

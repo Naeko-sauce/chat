@@ -5,7 +5,7 @@ import Main from "@/components/home/main";
 export default function Home() {
  
   return (
-    <div className="flex h-full">
+    <div className="flex">
       
       <Navigation />
       <Main  />
