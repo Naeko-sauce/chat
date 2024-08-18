@@ -5,6 +5,8 @@ import { Dispatch, ReactNode, SetStateAction, createContext, useMemo, useState, 
 // 定义状态的类型
 type State = {
     displayNavigation: boolean;
+    // 控制主题的状态
+    themeMode:"dark" | "light"
 };
 
 // 定义上下文类型
@@ -25,7 +27,7 @@ export default function AppContextProvider({ children }: { children: ReactNode }
     
     console.log("aaa");
     
-    const [state, setState] = useState({ displayNavigation: true });
+    const [state, setState] = useState<State>({ displayNavigation: true,  themeMode:"light"});
    
 
     // 使用 useMemo 缓存上下文值，避免不必要的重新渲染
