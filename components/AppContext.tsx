@@ -1,18 +1,13 @@
 "use client"
 
-import { Dispatch, ReactNode, SetStateAction, createContext, useMemo, useState, useContext } from "react";
+import { Action, initState, reducer, State } from "@/reducers/AppReducer";
+import { Dispatch, ReactNode, SetStateAction, createContext, useMemo, useState, useContext, useReducer } from "react";
 
-// 定义状态的类型
-type State = {
-    displayNavigation: boolean;
-    // 控制主题的状态
-    themeMode:"dark" | "light"
-};
 
 // 定义上下文类型
 type AppContextProps = {
     state: State; 
-    setState: Dispatch<SetStateAction<State>>; 
+    dispatch: Dispatch<Action> 
 };
 
 // 创建上下文，初始值为 null!
@@ -27,13 +22,13 @@ export default function AppContextProvider({ children }: { children: ReactNode }
     
     console.log("aaa");
     
-    const [state, setState] = useState<State>({ displayNavigation: true,  themeMode:"light"});
+    const [state, dispatch] = useReducer(reducer,initState)
    
 
     // 使用 useMemo 缓存上下文值，避免不必要的重新渲染
     const contextValue = useMemo(() => {
-        return { state, setState }; // 这里的 state 和 setState 与上下文类型中的属性名称一致
-    }, [state, setState]);
+        return { state, dispatch }; // 这里的 state 和 setState 与上下文类型中的属性名称一致
+    }, [state, dispatch]);
 
     return (
         <AppContext.Provider value={contextValue}>
