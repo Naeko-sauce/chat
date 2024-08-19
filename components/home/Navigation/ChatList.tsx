@@ -1,5 +1,7 @@
+import { groupByDate } from "@/components/common/util"
 import { Chat } from "@/types/chat"
-import { useState } from "react"
+import { list } from "postcss"
+import { useMemo, useState } from "react"
 import { AiOutlineEdit } from "react-icons/ai"
 import { MdCheck, MdClose, MdDeleteOutline } from "react-icons/md"
 import { PiChatBold, PiTrashBold } from "react-icons/pi"
@@ -20,15 +22,67 @@ export default function ChatList(){
             id: "3",
             title: "男人和男人怎么生孩子",
             updateTime: Date.now() + 2
-        }
+        },
+        {
+            id: "4",
+            title: "男人和男人怎么生孩子",
+            updateTime: Date.now() + 2
+        },
+        {
+            id: "5",
+            title: "男人和男人怎么生孩子",
+            updateTime: Date.now() + 2
+        },
+        {
+            id: "6",
+            title: "男人和男人怎么生孩子",
+            updateTime: Date.now() + 2
+        },
+        {
+            id: "7",
+            title: "男人和男人怎么生孩子",
+            updateTime: Date.now() + 2
+        },
+        {
+            id: "8",
+            title: "男人和男人怎么生孩子",
+            updateTime: Date.now() + 2
+        },
+        {
+            id: "9",
+            title: "男人和男人怎么生孩子",
+            updateTime: Date.now() + 2
+        },
+        {
+            id: "10",
+            title: "男人和男人怎么生孩子",
+            updateTime: Date.now() + 2
+        },
+        {
+            id: "11",
+            title: "男人和男人怎么生孩子",
+            updateTime: Date.now() + 2
+        },
+        {
+            id: "12",
+            title: "男人和男人怎么生孩子",
+            updateTime: Date.now() + 2
+        },
+       
     ])
 // 定义一个状态保存当前选择的对话
 const [selectedChat,setSelectedChat] =useState<Chat>()
-
-    return <div className="flex-1 mt-2 flex flex-col">
-        <ul>
+const groupList = useMemo(()=>{
+    console.log(groupByDate);
+    return groupByDate(ChatList)
+},[ChatList])
+    return <div className="flex-1 mt-2 mb-[48] flex flex-col overflow-auto">
+        {groupList.map(([date,list])=>{
+            return <div key={date}> 
+            <div className=" sticky top-0 z-10 p-3 text-sm bg-gray-900 text-gray-500 ">{date}</div>
+            <ul>
             {
-                ChatList.map((item)=>{
+                list.map((item)=>{
                     const selected =selectedChat?.id === item.id
                     return <li
                             onClick={()=>{
@@ -41,10 +95,16 @@ const [selectedChat,setSelectedChat] =useState<Chat>()
                             <PiChatBold />
                         </div>
                         <div className=" relative flex-1 whitespace-nowrap overflow-hidden">{item.title}</div>
-                        <span className={` group-hover:from-gray-800 absolute right-0 inset-y-0 w-8 from-gray-900 bg-gradient-to-l ${selected?"from-gray-800":'from-gray-900'} `}></span>
+                        <span
+                        className={`group-hover:from-gray-800 absolute right-0 inset-y-0 w-8  ${
+                            selected ? "from-gray-800" : "from-gray-900"
+                        }`}
+                    ></span>
                     </li>
                 })
             }
-        </ul>
+        </ul></div>
+        })}
+       
     </div>
 }
