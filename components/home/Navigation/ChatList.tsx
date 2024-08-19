@@ -22,16 +22,26 @@ export default function ChatList(){
             updateTime: Date.now() + 2
         }
     ])
+// 定义一个状态保存当前选择的对话
+const [selectedChat,setSelectedChat] =useState<Chat>()
+
     return <div className="flex-1 mt-2 flex flex-col">
         <ul>
             {
                 ChatList.map((item)=>{
-                    return <li key={item.id} className="flex items-center p-3 space-x-3 cursor-pointer">
+                    const selected =selectedChat?.id === item.id
+                    return <li
+                            onClick={()=>{
+                                setSelectedChat(item)
+                            }}                    
+                            key={item.id} className={`group flex items-center p-3 space-x-3 cursor-pointer
+                                rounded-md hover:bg-gray-800
+                             ${ selected? "bg-gray-800" :''}`}>
                         <div>
                             <PiChatBold />
                         </div>
                         <div className=" relative flex-1 whitespace-nowrap overflow-hidden">{item.title}</div>
-                        <span className="absolute right-0 inset-y-0 w-8 from-gray-900 bg-gradient-to-l"></span>
+                        <span className={` group-hover:from-gray-800 absolute right-0 inset-y-0 w-8 from-gray-900 bg-gradient-to-l ${selected?"from-gray-800":'from-gray-900'} `}></span>
                     </li>
                 })
             }
