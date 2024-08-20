@@ -3,7 +3,7 @@ import { Chat } from "@/types/chat"
 import { MdCheck, MdClose, MdDeleteOutline } from "react-icons/md"
 import { PiChatBold, PiTrashBold } from "react-icons/pi"
 import { AiOutlineEdit } from "react-icons/ai"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 type Props ={
     item:Chat
     selected:boolean
@@ -12,6 +12,9 @@ type Props ={
 
 export default function ChatItem({item,selected,onSelected}:Props){
     const [editing,setEditing] = useState(false)
+    useEffect(()=>{
+        setEditing(false)
+    },[selected])
 return <li
 onClick={() => {
     onSelected(item)
@@ -24,8 +27,7 @@ className={` relative group flex items-center p-3 space-x-3 cursor-pointer round
 <div>
     <PiChatBold />
 </div>
-<input className="flex-1 min-w-0 bg-transparent outline-none" defaultValue={item.title} />
-<div className='relative flex-1 whitespace-nowrap overflow-hidden'>
+{selected && editing ? <input autoFocus={true} className="flex-1 min-w-0 bg-transparent outline-none" defaultValue={item.title} />:<div className='relative flex-1 whitespace-nowrap overflow-hidden'>
     {item.title}
     <span
         className={`group-hover:from-gray-800 absolute right-0 inset-y-0 w-8 bg-gradient-to-l ${
@@ -34,14 +36,29 @@ className={` relative group flex items-center p-3 space-x-3 cursor-pointer round
                 : "from-gray-900"
         }`}
     ></span>
-</div>
+</div>}
+
+
 {selected && <div className="absolute right-1 flex" >
-    <button 
+    {
+        editing ?<><button 
         onClick={(e)=>{
-            setEditing(true); e.stopPropagation()
+            setEditing(false); e.stopPropagation()
         }}
-        className="p-1 hover:text-white"><AiOutlineEdit /> </button>
-    <button className="p-1 hover:text-white"><MdDeleteOutline /> </button>
+        className="p-1 hover:text-white"><MdCheck /> </button>
+    <button 
+    onClick={(e)=>{
+        setEditing(false); e.stopPropagation()
+    }}
+    className="p-1 hover:text-white"><MdClose /> </button></>
+    :<><button 
+    onClick={(e)=>{
+        setEditing(true); e.stopPropagation()
+    }}
+    className="p-1 hover:text-white"><AiOutlineEdit /> </button>
+<button className="p-1 hover:text-white"><MdDeleteOutline /> </button></>
+    }
+    
 </div>}
 </li>
 }
