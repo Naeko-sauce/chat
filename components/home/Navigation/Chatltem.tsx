@@ -12,8 +12,10 @@ type Props ={
 
 export default function ChatItem({item,selected,onSelected}:Props){
     const [editing,setEditing] = useState(false)
+    const [deleting,setDeleting] = useState(false)
     useEffect(()=>{
         setEditing(false)
+        setDeleting(false)
     },[selected])
 return <li
 onClick={() => {
@@ -25,9 +27,9 @@ className={` relative group flex items-center p-3 space-x-3 cursor-pointer round
 }`}
 >
 <div>
-    <PiChatBold />
+   {deleting ?<PiTrashBold /> : <PiChatBold />}
 </div>
-{selected && editing ? <input autoFocus={true} className="flex-1 min-w-0 bg-transparent outline-none" defaultValue={item.title} />:<div className='relative flex-1 whitespace-nowrap overflow-hidden'>
+{editing ? <input autoFocus={true} className="flex-1 min-w-0 bg-transparent outline-none" defaultValue={item.title} />:<div className='relative flex-1 whitespace-nowrap overflow-hidden'>
     {item.title}
     <span
         className={`group-hover:from-gray-800 absolute right-0 inset-y-0 w-8 bg-gradient-to-l ${
@@ -41,13 +43,22 @@ className={` relative group flex items-center p-3 space-x-3 cursor-pointer round
 
 {selected && <div className="absolute right-1 flex" >
     {
-        editing ?<><button 
+        editing || deleting ?<><button 
         onClick={(e)=>{
+            if(deleting){
+                console.log("删除");
+                
+            }else{
+                console.log("未删除");
+                
+            }
+            setDeleting(false)
             setEditing(false); e.stopPropagation()
         }}
         className="p-1 hover:text-white"><MdCheck /> </button>
     <button 
     onClick={(e)=>{
+        setDeleting(false)
         setEditing(false); e.stopPropagation()
     }}
     className="p-1 hover:text-white"><MdClose /> </button></>
@@ -56,7 +67,11 @@ className={` relative group flex items-center p-3 space-x-3 cursor-pointer round
         setEditing(true); e.stopPropagation()
     }}
     className="p-1 hover:text-white"><AiOutlineEdit /> </button>
-<button className="p-1 hover:text-white"><MdDeleteOutline /> </button></>
+<button
+    onClick={(e)=>{
+        setDeleting(true); e.stopPropagation()
+    }}
+className="p-1 hover:text-white"><MdDeleteOutline /> </button></>
     }
     
 </div>}
