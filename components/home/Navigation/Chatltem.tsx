@@ -3,6 +3,7 @@ import { Chat } from "@/types/chat"
 import { MdCheck, MdClose, MdDeleteOutline } from "react-icons/md"
 import { PiChatBold, PiTrashBold } from "react-icons/pi"
 import { AiOutlineEdit } from "react-icons/ai"
+import { useState } from "react"
 type Props ={
     item:Chat
     selected:boolean
@@ -10,18 +11,20 @@ type Props ={
 }
 
 export default function ChatItem({item,selected,onSelected}:Props){
+    const [editing,setEditing] = useState(false)
 return <li
 onClick={() => {
     onSelected(item)
 }}
 key={item.id}
-className={`group flex items-center p-3 space-x-3 cursor-pointer rounded-md hover:bg-gray-800 ${
-    selected ? "bg-gray-800" : ""
+className={` relative group flex items-center p-3 space-x-3 cursor-pointer rounded-md hover:bg-gray-800 ${
+    selected ? "bg-gray-800 pr-[3.5em]" : ""
 }`}
 >
 <div>
     <PiChatBold />
 </div>
+<input className="flex-1 min-w-0 bg-transparent outline-none" defaultValue={item.title} />
 <div className='relative flex-1 whitespace-nowrap overflow-hidden'>
     {item.title}
     <span
@@ -32,5 +35,13 @@ className={`group flex items-center p-3 space-x-3 cursor-pointer rounded-md hove
         }`}
     ></span>
 </div>
+{selected && <div className="absolute right-1 flex" >
+    <button 
+        onClick={(e)=>{
+            setEditing(true); e.stopPropagation()
+        }}
+        className="p-1 hover:text-white"><AiOutlineEdit /> </button>
+    <button className="p-1 hover:text-white"><MdDeleteOutline /> </button>
+</div>}
 </li>
 }
