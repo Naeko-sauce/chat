@@ -15,7 +15,7 @@ export default function ModelSelect() {
     ];
 
     return (
-        <div className="flex justify-center dark:bg-gray-900 p-1 rounded">
+        <div className="flex justify-center dark:bg-gray-800 p-1 rounded">
             {models.map((item) => (
                 <button
                     key={item.id}
