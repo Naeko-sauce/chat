@@ -21,7 +21,7 @@ export default function ModelSelect() {
     } = useAppContext();
     
     return (
-        <div className='flex justify-center items-center   p-1 rounded-xl'>
+        <div className='flex justify-center items-center bg-gray-100 dark:bg-gray-900 p-1 rounded-xl'>
             {models.map((item) => {
                 const selected = item.id === currentModel;
                 return (
